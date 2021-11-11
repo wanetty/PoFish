@@ -1,12 +1,6 @@
 #!/bin/bash
 
 
-install_ssl_Cert() {
-	git clone https://github.com/certbot/certbot.git /opt/letsencrypt > /dev/null 2>&1
-	command="/opt/letsencrypt/certbot-auto certonly --standalone $DOMAIN -n --register-unsafely-without-email --agree-tos"
-	eval $command
-
-}
 
 mkdir -p /etc/opendkim/keys/$DOMAIN/
 opendkim-genkey -s 202109 -d $DOMAIN -D /etc/opendkim/keys/$DOMAIN/
@@ -30,9 +24,9 @@ postfix reload
 service opendkim start
 install_ssl_Cert
 cd gophish
-sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
-sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
-sed -i 's/"use_tls" : false/"use_tls" : true/g' config.json
-sed -i "s/example.crt/${DOMAIN}.crt/g" config.json
-sed -i "s/example.key/${DOMAIN}.key/g" config.json
+#sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
+#sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
+#sed -i 's/"use_tls" : false/"use_tls" : true/g' config.json
+#sed -i "s/example.crt/${DOMAIN}.crt/g" config.json
+#sed -i "s/example.key/${DOMAIN}.key/g" config.json
 ./gophish
