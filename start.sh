@@ -1,7 +1,5 @@
 #!/bin/bash
 
-
-
 mkdir -p /etc/opendkim/keys/$DOMAIN/
 opendkim-genkey -s 202109 -d $DOMAIN -D /etc/opendkim/keys/$DOMAIN/
 chown -R opendkim:opendkim /etc/opendkim/keys/$DOMAIN/
@@ -22,7 +20,7 @@ sed -i "s/ _PUBLIC_IP_/$PUBLIC_IP/g" /etc/postfix/main.cf
 service postfix start
 postfix reload
 service opendkim start
-install_ssl_Cert
+#certbot certonly --stadalone -d $DOMAIN  --register-unsafely-without-email --agree-tos
 cd gophish
 #sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
 #sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
