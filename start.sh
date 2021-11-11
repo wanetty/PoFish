@@ -8,8 +8,6 @@ install_ssl_Cert() {
 
 }
 
-
-
 mkdir -p /etc/opendkim/keys/$DOMAIN/
 opendkim-genkey -s 202109 -d $DOMAIN -D /etc/opendkim/keys/$DOMAIN/
 chown -R opendkim:opendkim /etc/opendkim/keys/$DOMAIN/
@@ -32,4 +30,9 @@ postfix reload
 service opendkim start
 install_ssl_Cert
 cd gophish
+sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
+sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
+sed -i 's/"use_tls" : false/"use_tls" : true/g' config.json
+sed -i "s/example.crt/${DOMAIN}.crt/g" config.json
+sed -i "s/example.key/${DOMAIN}.key/g" config.json
 ./gophish
