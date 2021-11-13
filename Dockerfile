@@ -16,8 +16,8 @@ RUN find . -type f -exec sed -i.bak 's/X-Gophish-Signature/X-Signature/g' {} +
 RUN  sed -i 's/\"gophish\"/\"IGNORE\"/g' gophish/config/config.go
 WORKDIR /opt/gophish
 RUN go build
-#RUN sed -i "s/0.0.0.0:80/0.0.0.0:443/g" config.json
-
+RUN sed -i "s/0.0.0.0:80/0.0.0.0:443/g" config.json
+RUN sed -i "s/127.0.0.1:3333/0.0.0.0:3333/g" config.json
 WORKDIR /opt
 COPY dkim/opendkim.conf /etc/opendkim.conf
 COPY start.sh /opt/start.sh

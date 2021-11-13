@@ -20,11 +20,15 @@ sed -i "s/ _PUBLIC_IP_/$PUBLIC_IP/g" /etc/postfix/main.cf
 service postfix start
 postfix reload
 service opendkim start
-#certbot certonly --stadalone -d $DOMAIN  --register-unsafely-without-email --agree-tos
+certbot certonly --standalone -d $DOMAIN  --register-unsafely-without-email --agree-tos
 cd gophish
-#sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
-#sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
-#sed -i 's/"use_tls" : false/"use_tls" : true/g' config.json
-#sed -i "s/example.crt/${DOMAIN}.crt/g" config.json
-#sed -i "s/example.key/${DOMAIN}.key/g" config.json
+ssl_cert="/etc/letsencrypt/live/${DOMAIN}/fullchain.pem"
+ssl_key="/etc/letsencrypt/live/${DOMAIN}/privkey.pem"
+cp $ssl_cert ${DOMAIN}.crt
+cp $ssl_key ${DOMAIN}.key
+sed -i "s/gophish_admin.crt/${DOMAIN}.crt/g" config.json
+sed -i "s/gophish_admin.key/${DOMAIN}.key/g" config.json
+sed -i 's/"use_tls" : false/"use_tls" : true/g' config.json
+sed -i "s/example.crt/${DOMAIN}.crt/g" config.json
+sed -i "s/example.key/${DOMAIN}.key/g" config.json
 ./gophish
