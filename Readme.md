@@ -9,4 +9,4 @@
 
 # More info
 
-https://wanetty.github.io/tools/pofish
+https://blog.wanetty.com/tools/pofish
