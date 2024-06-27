@@ -9,4 +9,4 @@
 
 # More info
 
-https://blog.wanetty.com/tools/pofish
+https://blog.wanetty.com/blog/tools/pofish
